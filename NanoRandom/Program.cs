@@ -1,25 +1,33 @@
 ﻿
+#define ENTROPY
+//#define PSEUDO
+
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Threading;
+
 
 class MainSource
 {
     static void Main(string[] args)
     {
-        for(int i = 0; i < 10; i++)
+#if ENTROPY
+        for(int i = 0; i < 1000; i++)
         {
             long rand = NanoEntropy.newEntropy();
             Console.WriteLine(String.Format("{0:X}", rand));
         }
+#endif
 
+#if PSEUDO
         Console.WriteLine("Pseudorandom numbers...\n\n\n");
         PseudoGen gen = new PseudoGen(65537);
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 10; i++)
         {
             long rand = gen.NewRandom();
             Console.WriteLine(String.Format("{0}", rand));
         }
+#endif
 
 
 
@@ -34,7 +42,7 @@ class NanoEntropy
 
     public static long newEntropy()
     {
-        maxTimeWaitPerIter = 3;
+        maxTimeWaitPerIter = 2;
         rand = 1;
         seed = DateTime.Now.Ticks;
         Thread thread1 = new Thread(new ThreadStart(threadedNewEntropy));
@@ -73,7 +81,57 @@ class NanoEntropy
         int moreRandom = (int)rand % maxTimeWaitPerIter;
         if (moreRandom < 0) moreRandom *= -1;
         Thread.Sleep(moreRandom);
+
+
+        //This is just getting ridiculous...
+        //Mod is here to prevent memory usage from getting... out of hand
+        //The idea here is to introduce cache *incoherency* to 
+        //make everything that much less predictable
+        int lastPrime = SieveEratosthenes(Math.Abs((int)rand) % 1000000);
+
         rand = (rand * (long)DateTime.Now.Microsecond);
+        //Xor it with the last prime we found...
+        rand ^= lastPrime;
+    }
+
+
+    //This algorithm is designed to search for prime numbers up to some max number
+    //It will print a list of all the primes it finds
+    public static int SieveEratosthenes(int checkUpTo)
+    {
+        //This algorithm is pretty fast, but the fact it makes an array of checkUpTo bools is not great
+        //Its also subject to many cache misses since it's not always dealing with adjacent integers
+        //This algorithm cannot be used for checkUpTo sizes beyond the limits of our heap
+
+
+        //Generate a list of integers from 2 to N
+        //Use array indices as integer marker
+        //Bool represents isPrime relation
+        bool[] intIsNotPrime = new bool[checkUpTo];
+        int p = 2, sqrtN = (int)(Math.Sqrt(checkUpTo)) + 1;
+
+        while (p < sqrtN)
+        {
+            int iter = p;
+
+            //Since we add first, we'll iterate up to checkUpTo - p
+            while (iter < checkUpTo - p)
+            {
+                //iter+= p
+                iter += p;
+                //Mark off as NOT prime
+                intIsNotPrime[iter] = true;
+            }
+
+            //We don't want to double count our current prime number - hence do_while
+            do
+            {
+                p++;
+            } while (intIsNotPrime[p]); //Iterate p until it's prime
+        }
+
+        //Return the last prime we found
+        return p;
     }
 
 
