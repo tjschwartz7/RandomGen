@@ -11,15 +11,15 @@ class MainSource
 {
     static void Main(string[] args)
     {
-#if ENTROPY
+        #if ENTROPY
         for(int i = 0; i < 1000; i++)
         {
             long rand = NanoEntropy.newEntropy();
             Console.WriteLine(String.Format("{0:X}", rand));
         }
-#endif
-
-#if PSEUDO
+        #endif
+            
+        #if PSEUDO
         Console.WriteLine("Pseudorandom numbers...\n\n\n");
         PseudoGen gen = new PseudoGen(65537);
         for (int i = 0; i < 10; i++)
@@ -27,7 +27,7 @@ class MainSource
             long rand = gen.NewRandom();
             Console.WriteLine(String.Format("{0}", rand));
         }
-#endif
+        #endif
 
 
 
@@ -77,11 +77,11 @@ class NanoEntropy
 
     static void threadedNewEntropy()
     {
+
         //Added level of entropy depending on how long you're willing to wait for it
         int moreRandom = (int)rand % maxTimeWaitPerIter;
         if (moreRandom < 0) moreRandom *= -1;
         Thread.Sleep(moreRandom);
-
 
         //This is just getting ridiculous...
         //Mod is here to prevent memory usage from getting... out of hand
