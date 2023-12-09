@@ -1,0 +1,15 @@
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.csproj.AssemblyReference.cache
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.AssemblyInfoInputs.cache
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.AssemblyInfo.cs
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.csproj.CoreCompileInputs.cache
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\bin\Debug\net7.0\NanoRandom.exe
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\bin\Debug\net7.0\NanoRandom.deps.json
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\bin\Debug\net7.0\NanoRandom.runtimeconfig.json
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\bin\Debug\net7.0\NanoRandom.dll
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\bin\Debug\net7.0\NanoRandom.pdb
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.dll
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\refint\NanoRandom.dll
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.pdb
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\NanoRandom.genruntimeconfig.cache
+C:\Users\tjsch\source\repos\NanoRandom\NanoRandom\obj\Debug\net7.0\ref\NanoRandom.dll
