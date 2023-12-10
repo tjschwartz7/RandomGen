@@ -1,7 +1,9 @@
 ﻿
 #define ENTROPY
 //#define PSEUDO
+//#define PRINT
 
+using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -11,27 +13,40 @@ class MainSource
 {
     static void Main(string[] args)
     {
-        #if ENTROPY
-        for(int i = 0; i < 1000; i++)
-        {
-            long rand = NanoEntropy.newEntropy();
-            Console.WriteLine(String.Format("{0:X}", rand));
-        }
+    #if ENTROPY
+            TimeSpan span = new TimeSpan(0);
+            int iterations = 1000;
+            for(int i = 0; i < iterations; i++)
+            {
+                Stopwatch internalStopwatch = new Stopwatch();
+                internalStopwatch.Start();
+                long rand = NanoEntropy.newEntropy();
+                #if PRINT
+                    Console.WriteLine(String.Format("{0:X}", rand));
+                #endif
+                internalStopwatch.Stop();
+                Console.WriteLine("Time elapsed: " + internalStopwatch.Elapsed + "s");
+                span = span.Add(internalStopwatch.Elapsed);
+            }
+            Console.WriteLine("Total time elapsed: " + span.TotalMilliseconds + "ms");
+            Console.WriteLine("Average: " + (span.Divide(iterations) + "ms"));
         #endif
-            
+
         #if PSEUDO
-        Console.WriteLine("Pseudorandom numbers...\n\n\n");
-        PseudoGen gen = new PseudoGen(65537);
-        for (int i = 0; i < 10; i++)
-        {
-            long rand = gen.NewRandom();
-            Console.WriteLine(String.Format("{0}", rand));
-        }
+            Console.WriteLine("Pseudorandom numbers...\n\n\n");
+            PseudoGen gen = new PseudoGen(65537);
+            for (int i = 0; i < 10; i++)
+            {
+                long rand = gen.NewRandom();
+                #if PRINT
+                    Console.WriteLine(String.Format("{0}", rand));
+                #endif
+            }
         #endif
 
 
 
-    }
+        }
 }
 
 class NanoEntropy
